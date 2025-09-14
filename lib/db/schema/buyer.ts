@@ -10,8 +10,8 @@ export const statusEnum = pgEnum('status', ['New', 'Qualified', 'Contacted', 'Vi
 
 
 export const buyer = pgTable("buyer", {
-    id: uuid("id").notNull().primaryKey().unique().defaultRandom(),
-    fullName: varchar('full_name', { length: 80 }).notNull(),
+    id: uuid("id").primaryKey().defaultRandom(),
+    fullname: varchar('full_name', { length: 80 }).notNull(),
     email: text('email').notNull().unique(),
     phone: varchar('phone', { length: 15 }).notNull(),
     city: cityEnum('city').notNull(),

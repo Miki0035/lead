@@ -9,7 +9,7 @@ type SourceType = "Website" | "Referral" | "Walk-in" | "Call" | "Other"
 type FormDataType = {
     fullname: string;
     email: string;
-    phone: number;
+    phone: string;
     city: City;
     property: PropertyType
     bhk: BHKType;
@@ -21,3 +21,5 @@ type FormDataType = {
     notes: string;
     tags: string[];
 }
+
+type ErrorState<T> = Partial<Record<keyof T, string>>
