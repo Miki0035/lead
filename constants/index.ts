@@ -1,0 +1,6 @@
+export const cities = ["Chandigarh", "Mohali", "Zirakpur", "Panchkula", "Other"]
+export const propertyKinds = ["Apartment", "Villa", "Plot", "Office", "Retail"]
+export const bhk = ["1", "2", "3", "4", "Studio"]
+export const purposes = ["Buy", "Rent"]
+export const timelines = ["0-3m", "3-6m", ">6m", "Exploring"]
+export const sources = ["Website", "Referral", "Walk-in", "Call", "Other"]
