@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table"
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
 import { formateDate } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 // import { useRouter } from "next/navigation";
 
@@ -18,7 +19,9 @@ interface Props {
 }
 
 const BuyerTable = ({ buyers, pagination }: Props) => {
- 
+    const router = useRouter();
+
+
     return (
         <div className="px-5 py-4">
             <Table>
@@ -37,7 +40,7 @@ const BuyerTable = ({ buyers, pagination }: Props) => {
                 <TableBody>
                     {
                         buyers.map((buyer) => (
-                            <TableRow key={buyer.id}>
+                            <TableRow onClick={() => router.push(`/buyers/${buyer.id}`)} key={buyer.id} className="cursor-pointer">
                                 <TableCell className="text-left">{buyer.fullname}</TableCell>
                                 <TableCell className="text-left">{buyer.phone}</TableCell>
                                 <TableCell className="text-left">{buyer.city}</TableCell>
@@ -45,7 +48,7 @@ const BuyerTable = ({ buyers, pagination }: Props) => {
                                 <TableCell className="text-left">{`$${buyer.budgetMin} - $${buyer.budgetMax}`}</TableCell>
                                 <TableCell className="text-left">{buyer.timeline}</TableCell>
                                 <TableCell className="text-left">{buyer.status}</TableCell>
-                                <TableCell className="text-left">{formateDate(buyer.updatedAt)}</TableCell>
+                                <TableCell className="text-left">{formateDate(buyer.updatedAt as string)}</TableCell>
                             </TableRow>
 
                         ))

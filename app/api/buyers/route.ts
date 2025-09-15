@@ -1,6 +1,7 @@
 import { db } from "@/lib/db"
-import { buyer } from "@/lib/db/schema"
-import { sql } from "drizzle-orm"
+import { buyer, buyerHistory } from "@/lib/db/schema"
+import { getDiff } from "@/lib/utils"
+import { eq, sql } from "drizzle-orm"
 import { NextResponse } from "next/server"
 
 export async function GET(req: Request) {
@@ -25,5 +26,34 @@ export async function GET(req: Request) {
         console.error(`error getting uyer from database`, error)
         return NextResponse.json({ data: null }, { status: 500 })
 
+    }
+}
+
+
+export async function PATCH(req: Request) {
+    const body = await req.json()
+    const { id, newEdit } = body;
+    try {
+        const oldRow = await db.select().from(buyer).where(eq(buyer.id, id))
+        const diff = getDiff(oldRow[0], newEdit)
+        console.log(`diff`, diff)
+        if (Object.keys(diff).length > 0) {
+            await db.insert(buyerHistory).values({
+                buyerId: id,
+                changedBy: id, // who is updating
+                changedAt: new Date(),
+                diff: diff, // drizzle will store as JSON if your column is jsonb
+            })
+        }
+
+        const updatedRow = await db.update(buyer).set(newEdit).where(eq(buyer.id, id)).returning()
+        if (!updatedRow) return NextResponse.json({ message: "row not updated" }, { status: 500 })
+
+        return NextResponse.json({ message: "updated successfully" }, { status: 200 })
+
+        // await db.insert()
+    } catch (error) {
+        console.log(`error`, error)
+        return NextResponse.json({ message: "row not updated" }, { status: 500 })
     }
 }

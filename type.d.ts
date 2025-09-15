@@ -1,9 +1,9 @@
 type City = "Chandigarh" | "Mohali" | "Zirakpur" | "Panchkula" | "Other"
 type PropertyType = "Apartment" | "Villa" | "Plot" | "Office" | "Retail"
-type BHKType = "1" | "2" | "3" | "4" | "Studio"
+type BHKType = "1" | "2" | "3" | "4" | "Studio" | null
 type PurposeType = "Buy" | "Rent"
-type TimelineType = "0-3m" | "3-6m" | ">6m" | "Exploring"
-type SourceType = "Website" | "Referral" | "Walk-in" | "Call" | "Other"
+type TimelineType = "0-3m" | "3-6m" | ">6m" | "Exploring" | null
+type SourceType = "Website" | "Referral" | "Walk-in" | "Call" | "Other" | null
 
 
 
@@ -15,8 +15,8 @@ type FormDataType = {
     property: PropertyType
     bhk: BHKType;
     purpose: PurposeType;
-    budgetMin: number;
-    budgetMax: number;
+    budgetMin: number | null;
+    budgetMax: number | null;
     timeline: TimelineType;
     source: SourceType;
     notes: string;
@@ -32,14 +32,14 @@ type BuyerType = {
     property: PropertyType
     bhk: BHKType;
     purpose: PurposeType;
-    budgetMin: number;
-    budgetMax: number;
+    budgetMin: number | null;
+    budgetMax: number | null;
     timeline: TimelineType;
     source: SourceType;
-    notes: string;
-    tags: string[];
-    status?: string;
-    updatedAt: string;
+    notes: string | null;
+    tags: string[] | null;
+    status?: string | null;
+    updatedAt: string | Date;
 }
 
 type ErrorState<T> = Partial<Record<keyof T, string>>
