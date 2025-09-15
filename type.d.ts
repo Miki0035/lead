@@ -6,6 +6,7 @@ type TimelineType = "0-3m" | "3-6m" | ">6m" | "Exploring"
 type SourceType = "Website" | "Referral" | "Walk-in" | "Call" | "Other"
 
 
+
 type FormDataType = {
     fullname: string;
     email: string;
@@ -20,6 +21,25 @@ type FormDataType = {
     source: SourceType;
     notes: string;
     tags: string[];
+}
+
+type BuyerType = {
+    id: string;
+    fullname: string;
+    email: string;
+    phone: string;
+    city: City;
+    property: PropertyType
+    bhk: BHKType;
+    purpose: PurposeType;
+    budgetMin: number;
+    budgetMax: number;
+    timeline: TimelineType;
+    source: SourceType;
+    notes: string;
+    tags: string[];
+    status?: string;
+    updatedAt: string;
 }
 
 type ErrorState<T> = Partial<Record<keyof T, string>>
