@@ -13,9 +13,11 @@ Thanks for checking out this lead tracker mini app.
 
 ## <a name="tech-stack">⚙️ Tech Stack </a>
 
-- Next.js
-- Drizzle ORM
-- Supabase
+- [Next.js](https://nextjs.org/docs)
+- [Drizzle ORM](https://orm.drizzle.team/docs/overview)
+- [Supabase](https://supabase.com/)
+- [TailwindCSS](https://tailwindcss.com/docs)
+- [Shadcn](https://ui.shadcn.com/docs/installation)
 
 ## <a name="features">🔋 Features</a>
 
@@ -33,6 +35,13 @@ Thanks for checking out this lead tracker mini app.
 
 👉 CSV file import
 
+**Design Notes**
+
+- Validation is done on Client with Zod mainly on the forms
+- type validation and checking are done with typescript
+- Error handling done from api notifies the user for better UX
+- Pagination is implemented SSR and not on client for better performance
+
 ## <a name="donts">❌ Skipped</a>
 
 ⚠️ Lead debounced search searching and filtering
@@ -49,7 +58,7 @@ Thanks for checking out this lead tracker mini app.
 
 ## <a name="web">🌐 WebSite Deployment </a>
 
-- 🔗 [Lead](https://myrestateapp.netlify.app/)
+- 🔗 [Lead](https://lead-flame.vercel.app/)
 
 ## <a name="quick-start"> 🤸 Quick Start </a>
 
@@ -112,4 +121,3 @@ npm run dev
 ```
 
 In your browser go to 'localhost:3000' 👍
-
