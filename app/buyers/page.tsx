@@ -1,15 +1,16 @@
 import BuyerTable from "@/components/BuyerTable"
+import FileUpload from "@/components/FileUpload";
 import Link from "next/link";
 
 
 const Buyers = async ({ searchParams }: { searchParams: { page?: string } }) => {
-
-  const page = Number(searchParams.page ?? 1)
+  
+  const params = await searchParams
+  const page = Number(params.page ?? 1)
   const limit = 10;
 
   const buyers = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/buyers/?page=${page}&limit=${limit}`, { cache: "no-store" })
   const { data, pagination }: { data: BuyerType[], pagination: { page: number, limit: number, total: number, totalPages: number } } = await buyers.json()
-  console.log(`pagination from server`, pagination)
   return (
     <main className='w-full h-full px-5 py-10 '>
       <h1 className="text-2xl font-bold my-5">Buyer Leads</h1>
@@ -30,9 +31,12 @@ const Buyers = async ({ searchParams }: { searchParams: { page?: string } }) => 
           <p>Tags : {lead.tags ? lead.tags : "No tags"}</p>
         </Link>
       </section> */}
-      <Link href={"/buyers/new"} className="bg-black rounded-lg px-4 py-2 text-white">
-        Create +
-      </Link>
+      <div className="flex gap-8">
+        <Link href={"/buyers/new"} className="bg-black rounded-lg px-4 py-2 text-white">
+          Create +
+        </Link>
+        <FileUpload />
+      </div>
       <BuyerTable buyers={data} pagination={pagination} />
     </main>
   )

@@ -13,12 +13,12 @@ export const leadCreateSchema = z.object({
     property: z.coerce.string({ error: "property type is required" }).nonempty({ error: "property is required" }),
     bhk: z.coerce.string().optional(),
     purpose: z.coerce.string({ error: "purpose is required" }).nonempty({ error: "purpose is required" }),
-    budgetMin: z.coerce.number({ error: "min budget is required" }).positive({ error: "min budget must be greater than 0"}),
-    budgetMax: z.coerce.number({ error: "max budget is required" }).positive({ error: "max budget must be greater than 0"}),
+    budgetMin: z.coerce.number({ error: "min budget is required" }).positive({ error: "min budget must be greater than 0" }),
+    budgetMax: z.coerce.number({ error: "max budget is required" }).positive({ error: "max budget must be greater than 0" }),
     timeline: z.coerce.string({ error: "timeline is required" }).nonempty({ error: "timeline is required" }),
     source: z.coerce.string({ error: "source is required" }).nonempty({ error: "source is required" }),
     notes: z.string().optional(),
-    tags: z.array(z.string()).optional()
+    tags: z.string().optional(),
 }).refine((data) => data.budgetMax >= data.budgetMin, {
     path: ["budgetMax"],
     error: "Max budget must be greater or equal to the Min budget"

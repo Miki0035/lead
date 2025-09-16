@@ -15,7 +15,7 @@ export const buyer = pgTable("buyer", {
     email: text('email').notNull().unique(),
     phone: varchar('phone', { length: 15 }).notNull(),
     city: cityEnum('city').notNull(),
-    property: propertyTypeEnum('property').notNull(),
+    property: propertyTypeEnum('property'),
     bhk: bhkEnum('bhk'),
     purpose: purposeEnum('purpose').notNull(),
     budgetMin: integer(),

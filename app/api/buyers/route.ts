@@ -32,11 +32,15 @@ export async function GET(req: Request) {
 
 export async function PATCH(req: Request) {
     const body = await req.json()
-    const { id, newEdit } = body;
+    const { id, newEdit }: { id: string; newEdit: FormDataType } = body;
+    const updatedObj: BuyerType = {
+        ...newEdit,
+        id,
+        tags: newEdit?.tags?.split(",").map(tag => tag.trim()) || null
+    }
     try {
         const oldRow = await db.select().from(buyer).where(eq(buyer.id, id))
-        const diff = getDiff(oldRow[0], newEdit)
-        console.log(`diff`, diff)
+        const diff = getDiff(oldRow[0], updatedObj)
         if (Object.keys(diff).length > 0) {
             await db.insert(buyerHistory).values({
                 buyerId: id,
@@ -45,15 +49,14 @@ export async function PATCH(req: Request) {
                 diff: diff, // drizzle will store as JSON if your column is jsonb
             })
         }
+        const updatedRow = await db.update(buyer).set({ ...updatedObj, updatedAt: new Date() }).where(eq(buyer.id, id)).returning()
+        if (!updatedRow) return NextResponse.json({ message: "failed" }, { status: 500 })
 
-        const updatedRow = await db.update(buyer).set(newEdit).where(eq(buyer.id, id)).returning()
-        if (!updatedRow) return NextResponse.json({ message: "row not updated" }, { status: 500 })
-
-        return NextResponse.json({ message: "updated successfully" }, { status: 200 })
+        return NextResponse.json({ message: "success" }, { status: 200 })
 
         // await db.insert()
     } catch (error) {
-        console.log(`error`, error)
-        return NextResponse.json({ message: "row not updated" }, { status: 500 })
+        console.error(`error`, error)
+        return NextResponse.json({ message: "failed" }, { status: 500 })
     }
 }
